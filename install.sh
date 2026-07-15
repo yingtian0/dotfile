@@ -9,6 +9,9 @@ TMUX_PLUGIN_DIR="$HOME/.tmux/plugins/tpm"
 TMUX_AUTOSTART="$SCRIPT_DIR/shell/tmux-auto-start.sh"
 ZPROFILE="$HOME/.zprofile"
 ZSHRC="$HOME/.zshrc"
+PROMPT_CONFIG="$SCRIPT_DIR/shell/prompt.sh"
+ZSHRC="$HOME/.zshrc"
+PROMPT_CONFIG="$SCRIPT_DIR/shell/prompt.sh"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
   echo "This installer is for macOS only." >&2
@@ -91,6 +94,22 @@ if ! grep -Fq "$TMUX_AUTOSTART" "$ZSHRC" 2>/dev/null; then
     echo ""
     echo "# tmux auto-start"
     echo "source \"$TMUX_AUTOSTART\""
+  } >> "$ZSHRC"
+fi
+if ! grep -Fq "$PROMPT_CONFIG" "$ZSHRC" 2>/dev/null; then
+  {
+    echo ""
+    echo "# Shortened parent directories in the prompt"
+    echo "source \"$PROMPT_CONFIG\""
+  } >> "$ZSHRC"
+fi
+
+mkdir -p "$(dirname -- "$ZSHRC")"
+if ! grep -Fq "$PROMPT_CONFIG" "$ZSHRC" 2>/dev/null; then
+  {
+    echo ""
+    echo "# Shortened parent directories in the prompt"
+    echo "source \"$PROMPT_CONFIG\""
   } >> "$ZSHRC"
 fi
 
