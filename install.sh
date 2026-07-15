@@ -6,7 +6,9 @@ CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 NVIM_CONFIG="$CONFIG_HOME/nvim"
 TMUX_CONFIG="$HOME/.tmux.conf"
 TMUX_PLUGIN_DIR="$HOME/.tmux/plugins/tpm"
+TMUX_AUTOSTART="$SCRIPT_DIR/shell/tmux-auto-start.sh"
 ZPROFILE="$HOME/.zprofile"
+ZSHRC="$HOME/.zshrc"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
   echo "This installer is for macOS only." >&2
@@ -81,6 +83,15 @@ if ! grep -Fq 'openjdk@21/bin' "$ZPROFILE" 2>/dev/null; then
     echo 'export PATH="$(brew --prefix openjdk@21)/bin:$PATH"'
     echo 'export JAVA_HOME="$(/usr/libexec/java_home -v 21 2>/dev/null || brew --prefix openjdk@21)/libexec/openjdk.jdk/Contents/Home"'
   } >> "$ZPROFILE"
+fi
+
+mkdir -p "$(dirname -- "$ZSHRC")"
+if ! grep -Fq "$TMUX_AUTOSTART" "$ZSHRC" 2>/dev/null; then
+  {
+    echo ""
+    echo "# tmux auto-start"
+    echo "source \"$TMUX_AUTOSTART\""
+  } >> "$ZSHRC"
 fi
 
 mkdir -p "$CONFIG_HOME"

@@ -13,6 +13,8 @@ git clone https://github.com/yingtian0/dotfile.git ~/dotfile && ~/dotfile/instal
 `install.sh` installs Homebrew when it is missing, installs the tools listed in
 `Brewfile`, links `nvim/` to `~/.config/nvim` and `tmux/.tmux.conf` to
 `~/.tmux.conf`, installs TPM and its plugins, and synchronizes LazyVim plugins.
+It also configures interactive Zsh shells to attach to the `main` tmux session
+automatically.
 It keeps an existing Neovim configuration by moving it to a timestamped backup.
 
 The Neovim configuration enables LazyVim language extras for Go, TypeScript,
@@ -42,6 +44,13 @@ Then link the shared configuration and install TPM:
 ```bash
 ln -sfn ~/dotfile/tmux/.tmux.conf ~/.tmux.conf
 git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+To start or reattach to the `main` session automatically when WSL opens, add
+this line to `~/.bashrc`:
+
+```bash
+source "$HOME/dotfile/shell/tmux-auto-start.sh"
 ```
 
 Start a session with `tmux new -s dev`. The prefix is `Ctrl+a`; use
