@@ -1,6 +1,6 @@
 # yingtian0/dotfile
 
-Personal Neovim and macOS development setup.
+Personal Neovim, tmux, and macOS development setup.
 
 ## Recreate on a new Mac
 
@@ -11,7 +11,8 @@ git clone https://github.com/yingtian0/dotfile.git ~/dotfile && ~/dotfile/instal
 ```
 
 `install.sh` installs Homebrew when it is missing, installs the tools listed in
-`Brewfile`, links `nvim/` to `~/.config/nvim`, and synchronizes LazyVim plugins.
+`Brewfile`, links `nvim/` to `~/.config/nvim` and `tmux/.tmux.conf` to
+`~/.tmux.conf`, installs TPM and its plugins, and synchronizes LazyVim plugins.
 It keeps an existing Neovim configuration by moving it to a timestamped backup.
 
 The Neovim configuration enables LazyVim language extras for Go, TypeScript,
@@ -27,3 +28,22 @@ After installation, open Neovim and run:
 
 The GitHub CLI is installed but is not authenticated automatically. Run
 `gh auth login` if you want to use GitHub from the terminal.
+
+## WSL
+
+Install tmux in Ubuntu/Debian WSL with:
+
+```bash
+sudo apt update && sudo apt install -y tmux
+```
+
+Then link the shared configuration and install TPM:
+
+```bash
+ln -sfn ~/dotfile/tmux/.tmux.conf ~/.tmux.conf
+git clone --depth 1 https://github.com/tmux-plugins/tpm ~/.tmux/plugins/tpm
+```
+
+Start a session with `tmux new -s dev`. The prefix is `Ctrl+a`; use
+`Ctrl+a v` or `Ctrl+a s` to split panes and `Ctrl+a h/j/k/l` to move between
+them.

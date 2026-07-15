@@ -4,6 +4,8 @@ set -Eeuo pipefail
 SCRIPT_DIR="$(cd -- "$(dirname -- "${BASH_SOURCE[0]}")" && pwd)"
 CONFIG_HOME="${XDG_CONFIG_HOME:-$HOME/.config}"
 NVIM_CONFIG="$CONFIG_HOME/nvim"
+TMUX_CONFIG="$HOME/.tmux.conf"
+TMUX_PLUGIN_DIR="$HOME/.tmux/plugins/tpm"
 ZPROFILE="$HOME/.zprofile"
 
 if [[ "$(uname -s)" != "Darwin" ]]; then
@@ -52,6 +54,26 @@ if [[ ! -e "$JDK_LINK" ]]; then
   sudo ln -sfn "$OPENJDK_PREFIX/libexec/openjdk.jdk" "$JDK_LINK"
 fi
 
+if [[ ! -e "$TMUX_CONFIG" && ! -L "$TMUX_CONFIG" ]]; then
+  ln -s "$SCRIPT_DIR/tmux/.tmux.conf" "$TMUX_CONFIG"
+elif [[ -L "$TMUX_CONFIG" && "$(readlink "$TMUX_CONFIG")" == "$SCRIPT_DIR/tmux/.tmux.conf" ]]; then
+  :
+else
+  backup="$TMUX_CONFIG.backup.$(date +%Y%m%d-%H%M%S)"
+  mv "$TMUX_CONFIG" "$backup"
+  ln -s "$SCRIPT_DIR/tmux/.tmux.conf" "$TMUX_CONFIG"
+  echo "Existing tmux config moved to: $backup"
+fi
+
+mkdir -p "$(dirname -- "$TMUX_PLUGIN_DIR")"
+if [[ ! -e "$TMUX_PLUGIN_DIR" ]]; then
+  echo "Installing TPM (tmux plugin manager)..."
+  git clone --depth 1 https://github.com/tmux-plugins/tpm "$TMUX_PLUGIN_DIR"
+fi
+if [[ -x "$TMUX_PLUGIN_DIR/bin/install_plugins" ]]; then
+  "$TMUX_PLUGIN_DIR/bin/install_plugins"
+fi
+
 if ! grep -Fq 'openjdk@21/bin' "$ZPROFILE" 2>/dev/null; then
   {
     echo ""
@@ -82,6 +104,7 @@ Setup complete.
 
 Repository: $SCRIPT_DIR
 Neovim config: $NVIM_CONFIG -> $SCRIPT_DIR/nvim
+tmux config: $TMUX_CONFIG -> $SCRIPT_DIR/tmux/.tmux.conf
 
 Reload your shell:
   source "$ZPROFILE"

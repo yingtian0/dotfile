@@ -1,0 +1,5 @@
+* text=auto eol=lf
+*.sh text eol=lf
+*.lua text eol=lf
+*.tmux.conf text eol=lf
+Brewfile text eol=lf
