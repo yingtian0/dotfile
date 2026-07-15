@@ -36,23 +36,15 @@ return {
       require("snacks").setup(opts)
 
       local function set_dashboard_colors()
-        vim.api.nvim_set_hl(0, "SnacksDashboardHeader", {
-          fg = "#ff4fd8",
-          bold = true,
-        })
-        vim.api.nvim_set_hl(0, "SnacksDashboardKey", {
-          fg = "#54e8ff",
-          bold = true,
-        })
-        vim.api.nvim_set_hl(0, "SnacksDashboardDesc", {
-          fg = "#c792ea",
-        })
+        vim.api.nvim_set_hl(0, "SnacksDashboardHeader", { fg = "#ff4fd8", bold = true })
+        vim.api.nvim_set_hl(0, "SnacksDashboardKey", { fg = "#54e8ff", bold = true })
+        vim.api.nvim_set_hl(0, "SnacksDashboardDesc", { fg = "#c792ea" })
       end
 
       set_dashboard_colors()
       vim.api.nvim_create_autocmd("ColorScheme", {
         callback = set_dashboard_colors,
-        desc = "Keep the Neo Tokyo dashboard colors",
+        desc = "Keep Neo Tokyo dashboard colors",
       })
     end,
   },
