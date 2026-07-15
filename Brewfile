@@ -12,6 +12,7 @@ brew "python"
 brew "ripgrep"
 brew "ruby"
 brew "tree-sitter-cli"
+brew "tmux"
 brew "wget"
 
 cask "font-jetbrains-mono-nerd-font"
