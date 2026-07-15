@@ -3,8 +3,10 @@
 -- Add any additional keymaps here
 
 -- File explorer
-vim.keymap.set("n", "<leader>e", "<cmd>Neotree toggle left<cr>", {
-  desc = "Explorer Neo-tree",
+vim.keymap.set("n", "<leader>e", function()
+  Snacks.explorer({ cwd = LazyVim.root() })
+end, {
+  desc = "Explorer Snacks (root dir)",
   silent = true,
 })
 
