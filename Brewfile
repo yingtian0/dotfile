@@ -1,0 +1,17 @@
+tap "homebrew/bundle"
+
+brew "fd"
+brew "gh"
+brew "git"
+brew "go"
+brew "lazygit"
+brew "neovim"
+brew "node"
+brew "openjdk@21"
+brew "python"
+brew "ripgrep"
+brew "ruby"
+brew "tree-sitter-cli"
+brew "wget"
+
+cask "font-jetbrains-mono-nerd-font"
