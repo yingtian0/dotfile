@@ -44,6 +44,7 @@ source "$HOME/dotfile/shell/prompt.sh"
 ```
 
 The macOS installer adds the same configuration to `~/.zshrc` automatically.
+
 ## WSL
 
 Install tmux in Ubuntu/Debian WSL with:
@@ -69,3 +70,6 @@ source "$HOME/dotfile/shell/tmux-auto-start.sh"
 Start a session with `tmux new -s dev`. The prefix is `Ctrl+a`; use
 `Ctrl+a v` or `Ctrl+a s` to split panes and `Ctrl+a h/j/k/l` to move between
 them.
+
+NVM is loaded lazily in WSL, so opening a terminal does not wait for NVM unless
+the `nvm` command is used.
